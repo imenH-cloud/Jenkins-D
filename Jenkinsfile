@@ -6,7 +6,7 @@ pipeline {
         // the value of a temporary file.  For example:
         //   /home/user/.jenkins/workspace/cred_test@tmp/secretFiles/546a5cf3-9b56-4165-a0fd-19e2afe6b31f/kubeconfig.txt
         // MY_KUBECONFIG = credentials('my-kubeconfig')
-        registry = "wahidh007/demo-jenkins"
+        registry = "imenH-cloud/Jenkins-D"
         registryCredential = 'docker-hub-credentials'
         dockerImage = ''        
     }
@@ -25,8 +25,8 @@ pipeline {
     stages {
         stage('Clone Repo') {
             steps {
-                git branch: 'main', url: 'https://github.com/wahid007/Jenkins-Demo.git'
-                // git 'https://github.com/wahid007/Jenkins-Demo'
+                git branch: 'main', url: 'https://github.com/imenH-cloud/Jenkins-D.git'
+                // git 'https://github.com/imenH-cloud/Jenkins-D'
             }
 
         }
