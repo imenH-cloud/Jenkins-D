@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: spring-app-container
-          image: wahidh007/jenkins_demo2:0.1 # Change image with your image
+          image: eline2016/spring-app:latest # Change image with your image
           ports:
             - containerPort: 2222
 ---
