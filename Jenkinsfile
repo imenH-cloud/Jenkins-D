@@ -20,25 +20,34 @@ pipeline {
 
         stage('Build App') {
             steps {
-                // Add the chmod command here
                 sh 'chmod +x ./mvnw'
-                // Execute the Maven build
                 sh './mvnw clean package'
             }
         }
 
-        stage('Build image') {
+        stage('Initialize Docker') {
             steps {
                 script {
-                    dockerImage = docker.build registry + ":$BUILD_NUMBER"
+                    def dockerHome = tool 'MyDocker'
+                    env.PATH = "${dockerHome}/bin:${env.PATH}"
                 }
             }
         }
 
-        stage('Deploy Docker container') {
+        stage('Build Image') {
             steps {
-                sh "docker run --name demo-jenkins -d -p 2222:2222 $registry:$BUILD_NUMBER"
-                slackSend color: "good", message: registry + ":$BUILD_NUMBER" + " - image successfully created! :man_dancing:"
+                script {
+                    dockerImage = docker.build("${registry}:${BUILD_NUMBER}")
+                }
+            }
+        }
+
+        stage('Deploy Docker Container') {
+            steps {
+                script {
+                    docker.image(dockerImage).run('--name demo-jenkins -d -p 2222:2222')
+                }
+                slackSend color: "good", message: "${registry}:${BUILD_NUMBER} - image successfully created! :man_dancing:"
             }
         }
     }
@@ -54,4 +63,3 @@ pipeline {
         }
     }
 }
-
