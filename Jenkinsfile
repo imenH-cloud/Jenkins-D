@@ -42,35 +42,4 @@ pipeline {
             }
         }
 
-        stage('Push Image to Docker Hub') {
-            steps {
-                script {
-                    docker.withRegistry('https://registry.hub.docker.com', registryCredential) {
-                        dockerImage.push("${BUILD_NUMBER}")
-                        dockerImage.push("latest")
-                    }
-                }
-            }
-        }
-
-        stage('Deploy Docker Container') {
-            steps {
-                script {
-                    docker.image(dockerImage).run('--name demo-jenkins -d -p 2222:2222')
-                }
-                slackSend color: "good", message: "${registry}:${BUILD_NUMBER} - image successfully created and pushed to Docker Hub! :man_dancing:"
-            }
-        }
-    }
-
-    post {
-        success {
-            echo 'Pipeline execution successful!'
-            slackSend color: "good", message: "Pipeline execution successful! :man_dancing:"
-        }
-        failure {
-            echo 'Pipeline execution failed.'
-            slackSend color: "danger", message: "Pipeline execution failed! :ghost:"
-        }
-    }
-}
+        stage('
