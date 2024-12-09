@@ -6,13 +6,13 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: 'https://github.com/your-repo/your-app-repo'
-    targetRevision: HEAD
-    path: 'k8s'
+    repoURL: 'https://github.com/imenH-cloud/Jenkins-D'  # URL de votre dépôt GitHub
+    targetRevision: HEAD  # Utilise la dernière révision du dépôt
+    path: 'k8s.yml'  # Chemin vers le fichier Kubernetes dans votre dépôt
   destination:
-    server: 'https://kubernetes.default.svc'
-    namespace: your-namespace
+    server: 'https://kubernetes.default.svc'  # Utilise l'API server Kubernetes par défaut dans le cluster
+    namespace: default  # Remplacez par le namespace Kubernetes où vous souhaitez déployer l'application
   syncPolicy:
     automated:
-      prune: true
-      selfHeal: true
+      prune: true  # Supprime les ressources qui ne sont plus définies dans le dépôt Git
+      selfHeal: true  # Corrige les ressources qui ont été modifiées manuellement pour correspondre à la définition dans le dépôt Git
